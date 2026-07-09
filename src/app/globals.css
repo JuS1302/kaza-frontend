@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Couleurs */
+  --color-red-main: #99331A;
+  --color-red-dark: #842C16;
+  --color-orange-light: #FFFBF9;
+  --color-black: #0D0D0D;
+  --color-grey-light: #F5F5F5;
+  --color-grey-dark: #565656;
+
+  /* Police */
+  --font-sans: 'Inter', sans-serif;
+
+  /* Ombres */
+  --shadow-nav: 0px 4px 4px 0px rgba(182, 182, 182, 0.05);
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-black);
+  line-height: 143%;
+  background-color: var(--color-orange-light);
+}
+
+/* Styles typographiques réutilisables */
+.text-title    { font-size: 32px; font-weight: 700; }
+.text-subtitle { font-size: 24px; font-weight: 600; }
+.text-body-lg  { font-size: 18px; font-weight: 500; }
+.text-body-md  { font-size: 16px; font-weight: 400; }
+.text-label    { font-size: 14px; font-weight: 500; }
+.text-caption  { font-size: 12px; font-weight: 400; }
