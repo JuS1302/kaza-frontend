@@ -17,6 +17,7 @@
     host: PropertyHost
     equipments: string[]
     tags: string[]
+    price_per_night?: number
   }
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL

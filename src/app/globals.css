@@ -20,14 +20,18 @@
 body {
   font-family: var(--font-sans);
   color: var(--color-black);
-  line-height: 143%;
+  line-height: 1.43;
   background-color: var(--color-orange-light);
 }
 
-/* Styles typographiques réutilisables */
-.text-title    { font-size: 32px; font-weight: 700; }
-.text-subtitle { font-size: 24px; font-weight: 600; }
-.text-body-lg  { font-size: 18px; font-weight: 500; }
-.text-body-md  { font-size: 16px; font-weight: 400; }
-.text-label    { font-size: 14px; font-weight: 500; }
-.text-caption  { font-size: 12px; font-weight: 400; }
+/* Styles typographiques réutilisables — dans @layer components pour éviter tout conflit Tailwind */
+@layer components {
+  .text-title    { font-size: 32px; font-weight: 700; line-height: 143%; }
+  .text-subtitle { font-size: 24px; font-weight: 600; }
+  .text-menu     { font-size: 24px; font-weight: 400; } /* liens menu mobile */
+  .text-body-lg  { font-size: 18px; font-weight: 500; }
+  .text-body-md  { font-size: 16px; font-weight: 400; }
+  .text-label    { font-size: 14px; font-weight: 500; }
+  .text-body-sm  { font-size: 14px; font-weight: 400; }
+  .text-caption  { font-size: 12px; font-weight: 400; }
+}

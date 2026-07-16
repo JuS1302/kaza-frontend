@@ -1,70 +1,79 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import Button from '@/components/Button'
+import Icon from '@/components/Icon'
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header className="w-full pt-10">
+    <header className="w-full sticky top-0 z-40 bg-white md:static md:bg-transparent md:pt-10">
       {/* Desktop */}
       <nav className="hidden md:flex items-center justify-between w-[782px] mx-auto rounded-[10px] px-[100px] py-2 gap-5 bg-white shadow-nav">
         <div className="flex gap-5">
-          <Link href="/" className="text-sm font-normal hover:text-red-main">Accueil</Link>
-          <Link href="/about" className="text-sm font-normal hover:text-red-main">À propos</Link>
+          <Link href="/" className="text-body-sm hover:text-red-main">Accueil</Link>
+          <Link href="/about" className="text-body-sm hover:text-red-main">À propos</Link>
         </div>
         <Logo variant="full" />
         <div className="flex items-center gap-[34px]">
-          <Link href="/add-property" className="text-sm font-normal text-red-main">+Ajouter un logement</Link>
+          <Link href="/add-property" className="text-body-sm text-red-main">+Ajouter un logement</Link>
           <div className="flex items-center gap-2">
             <Link href="/favorites">
-              <Image src="/icons/heart.svg" alt="Favoris" width={20} height={20} />
+              <Icon name="heart" size={20} alt="Favoris" />
             </Link>
             <span className="block w-px h-1.25 bg-red-main" aria-hidden="true" />
             <Link href="/messages">
-              <Image src="/icons/message.svg" alt="Messagerie" width={20} height={20} />
+              <Icon name="message" size={20} alt="Messagerie" />
             </Link>
           </div>
         </div>
       </nav>
 
-      {/* Mobile - barre du haut */}
+      {/* Mobile - barre du haut (toujours visible) */}
       <nav className="flex md:hidden items-center justify-between px-4 py-4">
-        <Logo variant="picto" />
+        <Logo variant="picto" width={46} height={53} />
         <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+          onClick={() => setMenuOpen(true)}
+          aria-label="Ouvrir le menu"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
         >
-          <Image
-            src={menuOpen ? '/icons/close.svg' : '/icons/menu.svg'}
-            alt=""
-            width={24}
-            height={24}
-          />
+          <Icon name="menu" size={45} />
         </button>
       </nav>
 
-      {/* Mobile - menu ouvert */}
+      {/* Mobile - overlay plein écran */}
       {menuOpen && (
-        <div className="md:hidden flex flex-col px-4 pb-6 gap-6">
-          <Link href="/" className="text-body-lg" onClick={() => setMenuOpen(false)}>Accueil</Link>
-          <hr className="border-grey-light" />
-          <Link href="/about" className="text-body-lg" onClick={() => setMenuOpen(false)}>À propos</Link>
-          <hr className="border-grey-light" />
-          <Link href="/messages" className="text-body-lg" onClick={() => setMenuOpen(false)}>Messagerie</Link>
-          <hr className="border-grey-light" />
-          <Link href="/favorites" className="text-body-lg" onClick={() => setMenuOpen(false)}>Favoris</Link>
-          <hr className="border-grey-light" />
-          <Link
-            href="/add-property"
-            onClick={() => setMenuOpen(false)}
-            className="bg-red-dark text-white text-label px-4 py-2 rounded-full w-fit"
-          >
-            Ajouter un logement
-          </Link>
+        <div id="mobile-menu" className="fixed inset-0 bg-white z-50 flex flex-col md:hidden" role="dialog" aria-modal="true" aria-label="Menu de navigation">
+          {/* En-tête de l'overlay : logo + croix */}
+          <div className="flex items-center justify-between px-4 py-4">
+            <Logo variant="picto" width={46} height={53} />
+            <button onClick={() => setMenuOpen(false)} aria-label="Fermer le menu">
+              <Icon name="close" size={45} />
+            </button>
+          </div>
+
+          {/* Liens de navigation */}
+          <div className="flex flex-col px-4 pt-4">
+            <Link href="/" className="text-menu py-6" onClick={() => setMenuOpen(false)}>Accueil</Link>
+            <hr className="border-grey-light" />
+            <Link href="/about" className="text-menu py-6" onClick={() => setMenuOpen(false)}>À propos</Link>
+            <hr className="border-grey-light" />
+            <Link href="/messages" className="text-menu py-6" onClick={() => setMenuOpen(false)}>Messagerie</Link>
+            <hr className="border-grey-light" />
+            <Link href="/favorites" className="text-menu py-6" onClick={() => setMenuOpen(false)}>Favoris</Link>
+            <Button
+              variant="primary"
+              href="/add-property"
+              onClick={() => setMenuOpen(false)}
+              className="mt-4 self-start"
+            >
+              Ajouter un logement
+            </Button>
+          </div>
         </div>
       )}
     </header>

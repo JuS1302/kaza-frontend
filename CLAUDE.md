@@ -47,14 +47,18 @@ Projet de formation OpenClassrooms. Refonte front-end d'une plateforme de locati
 ```
 
 ### Typographie (Inter)
-| Classe | Taille | Poids |
-|---|---|---|
-| `.text-title` | 32px | 700 |
-| `.text-subtitle` | 24px | 600 |
-| `.text-body-lg` | 18px | 500 |
-| `.text-body-md` | 16px | 400 |
-| `.text-label` | 14px | 500 |
-| `.text-caption` | 12px | 400 |
+| Classe | Taille | Poids | Note |
+|---|---|---|---|
+| `.text-title` | 32px | 700 | line-height: 1.43 |
+| `.text-subtitle` | 24px | 600 | |
+| `.text-menu` | 24px | 400 | liens menu mobile uniquement |
+| `.text-body-lg` | 18px | 500 | |
+| `.text-body-md` | 16px | 400 | |
+| `.text-label` | 14px | 500 | |
+| `.text-body-sm` | 14px | 400 | |
+| `.text-caption` | 12px | 400 | |
+
+> ⚠️ `line-height` sur le `body` doit être `1.43` (sans unité), PAS `143%`. Avec `%`, la valeur calculée est héritée figée (22.88px pour 16px base) et écrase le line-height des grands titres.
 
 ### Nav desktop (Figma)
 - Largeur : 782px, centrée
@@ -69,7 +73,7 @@ Projet de formation OpenClassrooms. Refonte front-end d'une plateforme de locati
 - Pas de maquettes tablette → utiliser les breakpoints Tailwind par défaut
 
 ## Icônes (`public/icons/`)
-`logo.svg` | `picto.svg` | `heart.svg` | `message.svg` | `menu.svg` | `close.svg` | `back.svg` | `delete.svg` | `location.svg` | `plus.svg` | `send.png`
+`logo.svg` | `picto.svg` | `heart.svg` | `grey-heart.svg` | `message.svg` | `menu.svg` | `close.svg` | `back.svg` | `delete.svg` | `location.svg` | `plus.svg` | `send.png`
 
 ## Structure des pages
 ```
@@ -90,12 +94,19 @@ src/app/
 ## Composants existants
 - `Header.tsx` — nav responsive avec menu hamburger mobile
 - `Footer.tsx` — logo + copyright
-- `Logo.tsx` — accepte `variant="full"` ou `variant="picto"`
+- `Logo.tsx` — accepte `variant="full"` ou `variant="picto"`, `width`, `height` optionnels
+- `Button.tsx` — variantes `primary`, `dark`, `light` ; accepte `href` pour lien
+- `Icon.tsx` — accepte `IconName`, `size`, `alt`, `className`
+- `PropertyCard.tsx` — card logement avec favoris, prix, lien vers détail
+- `RedBlock.tsx` — bloc rouge avec titre + description (icon optionnelle)
+- `Tag.tsx` — étiquette avec suppression optionnelle
+- `FormInput.tsx` — champ texte/textarea/checkbox
+- `Picture.tsx` — wrapper Image avec border-radius
 
 ## Sprint 1 (obligatoire)
-- [ ] Liste des logements (page accueil)
+- [x] Liste des logements (page accueil)
 - [ ] Favoris avec localStorage
-- [ ] Navigation vers page détail
+- [x] Navigation vers page détail (cards linkées vers `/properties/[id]`)
 - [ ] Détail propriété (carrousel d'images)
 - [ ] Contacter l'hôte (→ messagerie)
 - [ ] Page login
