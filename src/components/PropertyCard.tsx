@@ -22,7 +22,7 @@ export default function PropertyCard({
     <div className="rounded-[10px] overflow-hidden">
 
       {/* Image + cœur favoris */}
-      <div className="relative aspect-square">
+      <div className="relative h-[376px]">
         <Link href={`/properties/${property.id}`}>
           <Image
             src={property.cover}
@@ -34,11 +34,12 @@ export default function PropertyCard({
         <button
           onClick={onToggleFavorite}
           aria-label={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
-          className="absolute top-4 right-4 w-8 h-8 bg-grey-light rounded-[5px] flex items-center justify-center"
+          className={`absolute top-4 right-4 w-8 h-8 rounded-[5px] flex items-center justify-center ${isFavorite ? 'bg-red-main' : 'bg-grey-light'}`}
         >
           <Icon
-            name={isFavorite ? 'heart' : 'grey-heart'}
+            name="grey-heart"
             size={10}
+            className={isFavorite ? 'brightness-0 invert' : ''}
           />
         </button>
       </div>

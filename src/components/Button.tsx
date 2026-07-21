@@ -28,7 +28,7 @@ export default function Button({
 }: ButtonProps) {
   const base = `flex items-center justify-center h-9 rounded-[10px] py-2 px-8 text-label ${variantStyles[variant]} ${className}`
 
-  
+
   if (href) {
     return (
       <Link href={href} onClick={onClick} className={base}>
