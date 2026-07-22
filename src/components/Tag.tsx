@@ -5,7 +5,7 @@ type TagProps = {
 
 export default function Tag({ label, onRemove }: TagProps) {
   return (
-    <span className="inline-flex items-center gap-2 bg-grey-light text-black text-label px-3 py-1 rounded-lg">
+    <span className="inline-flex items-center gap-2 bg-grey-light text-grey-dark text-caption px-4 py-2 rounded-[5px]">
       {label}
       {onRemove && (
         <button

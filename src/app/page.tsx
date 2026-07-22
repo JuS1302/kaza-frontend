@@ -1,13 +1,36 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import { getProperties } from '@/lib/api'
 import PropertiesGrid from '@/components/PropertiesGrid'
 import RedBlock from '@/components/RedBlock'
 
+export const metadata: Metadata = {
+  title: 'Accueil',
+  description: 'Trouvez votre hébergement idéal avec Kasa. Des logements uniques et authentiques chez des hôtes vérifiés, partout en France.',
+  openGraph: {
+    title: 'Kasa — Location entre particuliers',
+    description: 'Des logements uniques et authentiques chez des hôtes vérifiés, partout en France.',
+    images: [{ url: '/images/hero home.jpg', width: 1440, height: 458, alt: 'Chez vous, partout et ailleurs' }],
+  },
+}
+
+const schemaOrg = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Kasa',
+  description: 'Plateforme de location entre particuliers en France.',
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kasa.fr',
+}
+
 export default async function HomePage() {
   const properties = await getProperties()
 
   return (
-    <div className="flex flex-col gap-8 md:gap-10 px-4 md:px-0 pb-6 md:pb-10 max-w-6xl mx-auto">
+    <div className="flex flex-col gap-[51px] md:gap-10 px-4 md:px-0 pb-6 md:pb-10 max-w-6xl mx-auto">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
+      />
 
       {/* Hero — titre + sous-titre au-dessus, image seule en dessous */}
       <section className="flex flex-col">

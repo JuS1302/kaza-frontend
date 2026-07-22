@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
 import Button from '@/components/Button'
@@ -8,6 +8,14 @@ import Icon from '@/components/Icon'
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape' && menuOpen) setMenuOpen(false)
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [menuOpen])
 
   return (
     <header className="w-full sticky top-0 z-40 bg-white md:static md:bg-transparent md:pt-10">

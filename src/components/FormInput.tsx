@@ -27,12 +27,15 @@ export default function FormInput({
   onCheckedChange,
   name,
 }: FormInputProps) {
+  // Génère un id unique à partir du name ou du label pour associer label ↔ input
+  const inputId = name ?? label.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
 
-  // Checkbox : layout horizontal
+  // Checkbox : le label enveloppe l'input (association implicite, pas besoin de htmlFor)
   if (type === 'checkbox') {
     return (
       <label className="flex items-center gap-2 cursor-pointer">
         <input
+          id={inputId}
           type="checkbox"
           name={name}
           checked={checked}
@@ -48,8 +51,9 @@ export default function FormInput({
   if (type === 'textarea') {
     return (
       <div className="flex flex-col gap-1">
-        <label className="text-body-md font-medium">{label}</label>
+        <label htmlFor={inputId} className="text-body-md font-medium">{label}</label>
         <textarea
+          id={inputId}
           name={name}
           placeholder={placeholder}
           value={value}
@@ -65,9 +69,10 @@ export default function FormInput({
   if (onAdd || onClear) {
     return (
       <div className="flex flex-col gap-1">
-        <label className="text-body-md font-medium">{label}</label>
+        <label htmlFor={inputId} className="text-body-md font-medium">{label}</label>
         <div className="flex items-center gap-2">
           <input
+            id={inputId}
             type={type}
             name={name}
             placeholder={placeholder}
@@ -77,6 +82,7 @@ export default function FormInput({
           />
           {onAdd && (
             <button
+              type="button"
               onClick={onAdd}
               aria-label="Ajouter"
               className="flex items-center justify-center w-10 h-10 bg-red-dark text-white rounded-[10px] shrink-0"
@@ -86,6 +92,7 @@ export default function FormInput({
           )}
           {onClear && (
             <button
+              type="button"
               onClick={onClear}
               aria-label="Supprimer"
               className="text-red-main shrink-0"
@@ -101,8 +108,9 @@ export default function FormInput({
   // Input texte simple (défaut)
   return (
     <div className="flex flex-col gap-1">
-      <label className="text-body-md font-medium">{label}</label>
+      <label htmlFor={inputId} className="text-body-md font-medium">{label}</label>
       <input
+        id={inputId}
         type={type}
         name={name}
         placeholder={placeholder}

@@ -26,7 +26,7 @@ export default function Button({
   onClick,
   className = '',
 }: ButtonProps) {
-  const base = `flex items-center justify-center h-9 rounded-[10px] py-2 px-8 text-label ${variantStyles[variant]} ${className}`
+  const base = `flex items-center justify-center gap-2.5 h-9 rounded-[10px] py-2 px-8 text-label ${variantStyles[variant]} ${className}`
 
 
   if (href) {
@@ -39,7 +39,7 @@ export default function Button({
   }
 
   return (
-    <button onClick={onClick} className={base}>
+    <button type="button" onClick={onClick} className={base}>
       {icon}
       {children}
     </button>

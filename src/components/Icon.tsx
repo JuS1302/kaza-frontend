@@ -13,6 +13,7 @@ export type IconName =
   | 'message'
   | 'plus'
   | 'send'
+  | 'star'
 
 type IconProps = {
   name: IconName
