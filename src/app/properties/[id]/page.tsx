@@ -20,13 +20,40 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kasa.fr'
+
 export default async function PropertyPage({ params }: Props) {
   const { id } = await params
   const property = await getPropertyById(id).catch(() => null)
   if (!property) return notFound()
 
+  const schemaOrg = {
+    '@context': 'https://schema.org',
+    '@type': 'LodgingBusiness',
+    name: property.title,
+    description: property.description,
+    image: property.pictures[0],
+    address: property.location,
+    url: `${SITE_URL}/properties/${property.id}`,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: property.rating,
+      bestRating: '5',
+      ratingCount: '1',
+    },
+    host: {
+      '@type': 'Person',
+      name: property.host.name,
+      image: property.host.picture,
+    },
+  }
+
   return (
     <div className="px-4 md:px-8 lg:px-0 pt-6 md:pt-25 pb-10 max-w-[971px] mx-auto flex flex-col gap-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
+      />
 
       {/* Bouton retour */}
       <Button variant="light" href="/" icon={<Icon name="back" size={14} alt="" />} className="px-4 w-fit text-grey-dark">

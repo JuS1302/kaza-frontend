@@ -14,23 +14,34 @@ export const metadata: Metadata = {
   },
 }
 
-const schemaOrg = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'Kasa',
-  description: 'Plateforme de location entre particuliers en France.',
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kasa.fr',
-}
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kasa.fr'
 
 export default async function HomePage() {
   const properties = await getProperties()
 
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Kasa',
+    description: 'Plateforme de location entre particuliers en France.',
+    url: SITE_URL,
+  }
+
+  const listSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: properties.slice(0, 12).map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `${SITE_URL}/properties/${p.id}`,
+      name: p.title,
+    })),
+  }
+
   return (
     <div className="flex flex-col gap-[51px] md:gap-10 px-4 md:px-8 lg:px-0 pb-6 md:pb-10 max-w-6xl mx-auto">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(listSchema) }} />
 
       {/* Hero — titre + sous-titre au-dessus, image seule en dessous */}
       <section className="flex flex-col">
