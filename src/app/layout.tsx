@@ -17,6 +17,10 @@ export const metadata: Metadata = {
     template: '%s | Kasa',
   },
   description: 'Kasa vous aide à trouver un hébergement chaleureux partout en France. Location entre particuliers, réservation simple et sécurisée.',
+  icons: {
+    icon: '/icons/picto.svg',
+    apple: '/icons/picto.svg',
+  },
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
