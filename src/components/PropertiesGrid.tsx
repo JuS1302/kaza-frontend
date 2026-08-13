@@ -9,7 +9,7 @@ export default function PropertiesGrid({ properties }: { properties: Property[] 
   const { favorites, toggleFavorite } = useFavorites()
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {properties.slice(0, 12).map((property) => (
         <PropertyCard
           key={property.id}

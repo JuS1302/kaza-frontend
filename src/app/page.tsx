@@ -26,7 +26,7 @@ export default async function HomePage() {
   const properties = await getProperties()
 
   return (
-    <div className="flex flex-col gap-[51px] md:gap-10 px-4 md:px-0 pb-6 md:pb-10 max-w-6xl mx-auto">
+    <div className="flex flex-col gap-[51px] md:gap-10 px-4 md:px-8 lg:px-0 pb-6 md:pb-10 max-w-6xl mx-auto">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}

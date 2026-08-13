@@ -11,7 +11,7 @@ export default async function FavoritesPage() {
   const properties = await getProperties()
 
   return (
-    <div className="flex flex-col px-4 md:px-0 pb-10 max-w-6xl mx-auto">
+    <div className="flex flex-col px-4 md:px-8 lg:px-0 pb-10 max-w-6xl mx-auto">
 
       <section className="flex flex-col gap-2 text-center pt-10 pb-10 md:pt-[71px]">
         <h1 className="text-title text-red-main">Vos favoris</h1>

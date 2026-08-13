@@ -26,7 +26,7 @@ export default async function PropertyPage({ params }: Props) {
   if (!property) return notFound()
 
   return (
-    <div className="px-4 md:px-0 pt-6 md:pt-25 pb-10 max-w-[971px] mx-auto flex flex-col gap-6">
+    <div className="px-4 md:px-8 lg:px-0 pt-6 md:pt-25 pb-10 max-w-[971px] mx-auto flex flex-col gap-6">
 
       {/* Bouton retour */}
       <Button variant="light" href="/" icon={<Icon name="back" size={14} alt="" />} className="px-4 w-fit text-grey-dark">
@@ -34,7 +34,7 @@ export default async function PropertyPage({ params }: Props) {
       </Button>
 
       {/* Disposition principale : colonne gauche + colonne hôte */}
-      <div className="flex flex-col md:flex-row gap-[10px]">
+      <div className="flex flex-col lg:flex-row gap-[10px]">
 
         {/* Colonne gauche : images + contenu */}
         <div className="flex flex-col gap-[10px] flex-1 min-w-0">
@@ -80,7 +80,7 @@ export default async function PropertyPage({ params }: Props) {
         </div>
 
         {/* Carte hôte : à droite sur desktop, en bas sur mobile */}
-        <div className="md:w-[345px] md:self-start bg-white rounded-[10px] p-6 flex flex-col gap-2 flex-shrink-0">
+        <div className="lg:w-[345px] lg:self-start bg-white rounded-[10px] p-6 flex flex-col gap-2 flex-shrink-0">
           <h2 className="text-base font-medium text-black">Votre hôte</h2>
           <div className="flex items-center gap-[18px] py-4">
             <div className="relative w-[82px] h-[82px] overflow-hidden flex-shrink-0">
@@ -92,7 +92,9 @@ export default async function PropertyPage({ params }: Props) {
               <span className="text-base text-black">{property.rating}</span>
             </div>
           </div>
-          <ContactButton />
+          <div className="w-fit lg:w-full">
+            <ContactButton />
+          </div>
         </div>
       </div>
     </div>

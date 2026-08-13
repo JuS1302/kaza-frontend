@@ -46,7 +46,7 @@ export default function Header() {
   return (
     <header className="w-full sticky top-0 z-40 bg-white md:static md:bg-transparent md:pt-10">
       {/* Desktop */}
-      <nav className="hidden md:flex items-center w-[960px] mx-auto rounded-[10px] px-[100px] py-2 bg-white shadow-nav">
+      <nav className="hidden md:flex items-center w-full max-w-[960px] mx-auto rounded-[10px] px-8 lg:px-[100px] py-2 bg-white shadow-nav">
         <div className="flex-1 flex gap-5">
           <Link href="/" className="text-body-sm hover:text-red-main">Accueil</Link>
           <Link href="/about" className="text-body-sm hover:text-red-main">À propos</Link>
