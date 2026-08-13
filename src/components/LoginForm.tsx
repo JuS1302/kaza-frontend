@@ -23,6 +23,7 @@ export default function LoginForm() {
     try {
       const { token } = await login(email, password)
       localStorage.setItem('kasa_token', token)
+      window.dispatchEvent(new Event('kasa-auth-change'))
       router.push(redirect)
     } catch {
       setError('Email ou mot de passe incorrect.')

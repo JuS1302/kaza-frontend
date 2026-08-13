@@ -1,20 +1,27 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useSyncExternalStore } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
 import Button from '@/components/Button'
 import Icon from '@/components/Icon'
 
+// Lit le token dans localStorage et se met à jour quand on dispatch 'kasa-auth-change'
+function subscribeToAuth(callback: () => void) {
+  window.addEventListener('kasa-auth-change', callback)
+  return () => window.removeEventListener('kasa-auth-change', callback)
+}
+
 export default function Header() {
   const router = useRouter()
   const [menuOpen, setMenuOpen] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  useEffect(() => {
-    setIsLoggedIn(!!localStorage.getItem('kasa_token'))
-  }, [])
+  const isLoggedIn = useSyncExternalStore(
+    subscribeToAuth,
+    () => !!localStorage.getItem('kasa_token'), // côté client
+    () => false                                  // côté serveur
+  )
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -24,9 +31,14 @@ export default function Header() {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [menuOpen])
 
+  function goTo(path: string) {
+    router.push(isLoggedIn ? path : `/login?redirect=${path}`)
+    setMenuOpen(false)
+  }
+
   function handleLogout() {
     localStorage.removeItem('kasa_token')
-    setIsLoggedIn(false)
+    window.dispatchEvent(new Event('kasa-auth-change'))
     setMenuOpen(false)
     router.push('/')
   }
@@ -34,30 +46,31 @@ export default function Header() {
   return (
     <header className="w-full sticky top-0 z-40 bg-white md:static md:bg-transparent md:pt-10">
       {/* Desktop */}
-      <nav className="hidden md:flex items-center justify-between w-[960px] mx-auto rounded-[10px] px-[100px] py-2 gap-5 bg-white shadow-nav">
-        <div className="flex gap-5">
+      <nav className="hidden md:flex items-center w-[960px] mx-auto rounded-[10px] px-[100px] py-2 bg-white shadow-nav">
+        <div className="flex-1 flex gap-5">
           <Link href="/" className="text-body-sm hover:text-red-main">Accueil</Link>
           <Link href="/about" className="text-body-sm hover:text-red-main">À propos</Link>
+          {isLoggedIn ? (
+            <button onClick={handleLogout} className="text-body-sm text-red-main hover:text-red-dark">
+              Se déconnecter
+            </button>
+          ) : (
+            <Link href="/login" className="text-body-sm hover:text-red-main">Se connecter</Link>
+          )}
         </div>
         <Logo variant="full" />
-        <div className="flex items-center gap-[34px]">
-          <Link href="/add-property" className="text-body-sm text-red-main">+Ajouter un logement</Link>
+        <div className="flex-1 flex items-center justify-end gap-[34px]">
+          <button onClick={() => goTo('/add-property')} className="text-body-sm text-red-main hover:text-red-dark">
+            +Ajouter un logement
+          </button>
           <div className="flex items-center gap-2">
             <Link href="/favorites">
               <Icon name="heart" size={20} alt="Favoris" />
             </Link>
             <span className="block w-px h-1.25 bg-red-main" aria-hidden="true" />
-            <Link href="/messages">
+            <button onClick={() => goTo('/messages')} aria-label="Messagerie">
               <Icon name="message" size={20} alt="Messagerie" />
-            </Link>
-            <span className="block w-px h-1.25 bg-red-main" aria-hidden="true" />
-            {isLoggedIn ? (
-              <button onClick={handleLogout} className="text-body-sm text-red-main hover:text-red-dark">
-                Se déconnecter
-              </button>
-            ) : (
-              <Link href="/login" className="text-body-sm hover:text-red-main">Se connecter</Link>
-            )}
+            </button>
           </div>
         </div>
       </nav>
@@ -92,7 +105,7 @@ export default function Header() {
             <hr className="border-grey-light" />
             <Link href="/about" className="text-menu py-6" onClick={() => setMenuOpen(false)}>À propos</Link>
             <hr className="border-grey-light" />
-            <Link href="/messages" className="text-menu py-6" onClick={() => setMenuOpen(false)}>Messagerie</Link>
+            <button onClick={() => goTo('/messages')} className="text-menu py-6 text-left">Messagerie</button>
             <hr className="border-grey-light" />
             <Link href="/favorites" className="text-menu py-6" onClick={() => setMenuOpen(false)}>Favoris</Link>
             <hr className="border-grey-light" />
@@ -105,8 +118,7 @@ export default function Header() {
             )}
             <Button
               variant="primary"
-              href="/add-property"
-              onClick={() => setMenuOpen(false)}
+              onClick={() => goTo('/add-property')}
               className="mt-4 self-start"
             >
               Ajouter un logement
