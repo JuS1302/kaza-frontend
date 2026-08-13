@@ -1,13 +1,20 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
 import Button from '@/components/Button'
 import Icon from '@/components/Icon'
 
 export default function Header() {
+  const router = useRouter()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem('kasa_token'))
+  }, [])
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -17,10 +24,17 @@ export default function Header() {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [menuOpen])
 
+  function handleLogout() {
+    localStorage.removeItem('kasa_token')
+    setIsLoggedIn(false)
+    setMenuOpen(false)
+    router.push('/')
+  }
+
   return (
     <header className="w-full sticky top-0 z-40 bg-white md:static md:bg-transparent md:pt-10">
       {/* Desktop */}
-      <nav className="hidden md:flex items-center justify-between w-[782px] mx-auto rounded-[10px] px-[100px] py-2 gap-5 bg-white shadow-nav">
+      <nav className="hidden md:flex items-center justify-between w-[960px] mx-auto rounded-[10px] px-[100px] py-2 gap-5 bg-white shadow-nav">
         <div className="flex gap-5">
           <Link href="/" className="text-body-sm hover:text-red-main">Accueil</Link>
           <Link href="/about" className="text-body-sm hover:text-red-main">À propos</Link>
@@ -36,6 +50,14 @@ export default function Header() {
             <Link href="/messages">
               <Icon name="message" size={20} alt="Messagerie" />
             </Link>
+            <span className="block w-px h-1.25 bg-red-main" aria-hidden="true" />
+            {isLoggedIn ? (
+              <button onClick={handleLogout} className="text-body-sm text-red-main hover:text-red-dark">
+                Se déconnecter
+              </button>
+            ) : (
+              <Link href="/login" className="text-body-sm hover:text-red-main">Se connecter</Link>
+            )}
           </div>
         </div>
       </nav>
@@ -73,6 +95,14 @@ export default function Header() {
             <Link href="/messages" className="text-menu py-6" onClick={() => setMenuOpen(false)}>Messagerie</Link>
             <hr className="border-grey-light" />
             <Link href="/favorites" className="text-menu py-6" onClick={() => setMenuOpen(false)}>Favoris</Link>
+            <hr className="border-grey-light" />
+            {isLoggedIn ? (
+              <button onClick={handleLogout} className="text-menu py-6 text-left text-red-main">
+                Se déconnecter
+              </button>
+            ) : (
+              <Link href="/login" className="text-menu py-6" onClick={() => setMenuOpen(false)}>Se connecter</Link>
+            )}
             <Button
               variant="primary"
               href="/add-property"

@@ -9,6 +9,7 @@ type ButtonProps = {
   href?: string
   onClick?: () => void
   className?: string
+  type?: 'button' | 'submit' | 'reset'
 }
 
 // Couleurs selon la variante Figma
@@ -25,6 +26,7 @@ export default function Button({
   href,
   onClick,
   className = '',
+  type = 'button',
 }: ButtonProps) {
   const base = `flex items-center justify-center gap-2.5 h-9 rounded-[10px] py-2 px-8 text-label ${variantStyles[variant]} ${className}`
 
@@ -39,7 +41,7 @@ export default function Button({
   }
 
   return (
-    <button type="button" onClick={onClick} className={base}>
+    <button type={type} onClick={onClick} className={base}>
       {icon}
       {children}
     </button>

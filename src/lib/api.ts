@@ -21,11 +21,24 @@
   }
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL
+  // Les routes auth sont sur /auth/... sans le préfixe /api
+  const AUTH_URL = API_URL?.replace('/api', '') ?? 'http://localhost:3000'
 
   // Récupère toutes les propriétés (page d'accueil)
   export async function getProperties(): Promise<Property[]> {
     const res = await fetch(`${API_URL}/properties`)
     if (!res.ok) throw new Error('Erreur lors du chargement des propriétés')
+    return res.json()
+  }
+
+  // Connecte un utilisateur et retourne le token JWT
+  export async function login(email: string, password: string): Promise<{ token: string }> {
+    const res = await fetch(`${AUTH_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    })
+    if (!res.ok) throw new Error('Email ou mot de passe incorrect')
     return res.json()
   }
 

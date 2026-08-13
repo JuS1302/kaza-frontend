@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getPropertyById } from '@/lib/api'
-import Icon from '@/components/Icon'
 import Button from '@/components/Button'
+import Icon from '@/components/Icon'
 import Tag from '@/components/Tag'
 import Picture from '@/components/Picture'
 import PropertyImages from '@/components/PropertyImages'
+import ContactButton from '@/components/ContactButton'
 
 type Props = { params: Promise<{ id: string }> }
 
@@ -91,8 +92,7 @@ export default async function PropertyPage({ params }: Props) {
               <span className="text-base text-black">{property.rating}</span>
             </div>
           </div>
-          <Button variant="primary" href="/messages">Contacter l&apos;hôte</Button>
-          <Button variant="primary" href="/messages">Envoyer un message</Button>
+          <ContactButton />
         </div>
       </div>
     </div>
