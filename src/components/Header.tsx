@@ -58,7 +58,7 @@ export default function Header() {
             <Link href="/login" className="text-body-sm hover:text-red-main">Se connecter</Link>
           )}
         </div>
-        <Logo variant="full" />
+        <Logo variant="full" ariaHidden />
         <div className="flex-1 flex items-center justify-end gap-[34px]">
           <button onClick={() => goTo('/add-property')} className="text-body-sm text-red-main hover:text-red-dark">
             +Ajouter un logement

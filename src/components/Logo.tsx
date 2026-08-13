@@ -6,16 +6,22 @@ type LogoProps = {
   variant?: 'full' | 'picto'
   width?: number
   height?: number
+  ariaHidden?: boolean
 }
 
-export default function Logo({ variant = 'full', width, height }: LogoProps) {
+export default function Logo({ variant = 'full', width, height, ariaHidden }: LogoProps) {
   const src = variant === 'picto' ? '/icons/picto.svg' : '/icons/logo.svg'
   const w = width ?? (variant === 'picto' ? 40 : 120)
   const h = height ?? 40
 
   return (
-    <Link href="/">
-      <Image src={src} alt="Kasa" width={w} height={h} />
+    <Link
+      href="/"
+      aria-label="Accueil"
+      aria-hidden={ariaHidden || undefined}
+      tabIndex={ariaHidden ? -1 : undefined}
+    >
+      <Image src={src} alt="" width={w} height={h} />
     </Link>
   )
 }

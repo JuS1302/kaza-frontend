@@ -26,7 +26,7 @@ export default async function PropertyPage({ params }: Props) {
   if (!property) return notFound()
 
   return (
-    <div className="px-4 md:px-0 pt-25 pb-10 max-w-[971px] mx-auto flex flex-col gap-6">
+    <div className="px-4 md:px-0 pt-6 md:pt-25 pb-10 max-w-[971px] mx-auto flex flex-col gap-6">
 
       {/* Bouton retour */}
       <Button variant="light" href="/" icon={<Icon name="back" size={14} alt="" />} className="px-4 w-fit text-grey-dark">

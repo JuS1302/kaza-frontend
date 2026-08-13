@@ -33,8 +33,8 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="flex items-center justify-center flex-1 px-4 py-16">
-      <div className="w-full max-w-[742px] bg-white rounded-[10px] px-[180px] py-20 border border-grey-light flex flex-col gap-[38px]">
+    <div className="flex items-center justify-center flex-1 px-4 py-8 md:py-16">
+      <div className="w-full max-w-[742px] bg-white rounded-[10px] px-6 py-10 md:px-[180px] md:py-20 border border-grey-light flex flex-col gap-[38px]">
         <div className="flex flex-col gap-2">
           <h1 className="text-title text-red-main text-center">Heureux de vous revoir</h1>
           <p className="text-body-sm text-grey-dark text-center">
@@ -60,7 +60,7 @@ export default function LoginForm() {
 
           {error && <p className="text-red-main text-body-sm">{error}</p>}
 
-          <Button type="submit" variant="primary" className="mx-auto">
+          <Button type="submit" variant="primary" className="w-full md:w-auto md:mx-auto">
             {loading ? 'Connexion...' : 'Se connecter'}
           </Button>
         </form>
