@@ -17,10 +17,12 @@ export default function Header() {
   const router = useRouter()
   const [menuOpen, setMenuOpen] = useState(false)
 
+  // useSyncExternalStore : hook React pour lire une valeur extérieure à React (ici localStorage)
+  // et se mettre à jour automatiquement quand elle change
   const isLoggedIn = useSyncExternalStore(
-    subscribeToAuth,
-    () => !!localStorage.getItem('kasa_token'), // côté client
-    () => false                                  // côté serveur
+    subscribeToAuth,                               // 1. comment écouter les changements (événement kasa-auth-change)
+    () => !!localStorage.getItem('kasa_token'),    // 2. valeur côté navigateur : true si token présent, false sinon
+    () => false                                    // 3. valeur côté serveur (localStorage n'existe pas côté serveur)
   )
 
   useEffect(() => {
