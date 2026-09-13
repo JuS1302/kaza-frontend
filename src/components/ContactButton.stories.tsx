@@ -15,4 +15,8 @@ export default meta
 
 type Story = StoryObj<typeof ContactButton>
 
-export const Default: Story = {}
+export const Default: Story = {
+  args: {
+    propertyId: 'abc123',
+  },
+}

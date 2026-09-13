@@ -42,6 +42,22 @@
     return res.json()
   }
 
+  // Crée un compte et retourne le token JWT (même format de réponse que /auth/login)
+  export async function register(
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+  ): Promise<{ token: string }> {
+    const res = await fetch(`${AUTH_URL}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ firstName, lastName, email, password }),
+    })
+    if (!res.ok) throw new Error('Impossible de créer le compte')
+    return res.json()
+  }
+
   // Récupère une propriété par son id (page détail)
   export async function getPropertyById(id: string): Promise<Property> {
     const res = await fetch(`${API_URL}/properties/${id}`)

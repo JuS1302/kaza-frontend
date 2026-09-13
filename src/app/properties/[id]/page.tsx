@@ -120,7 +120,7 @@ export default async function PropertyPage({ params }: Props) {
             </div>
           </div>
           <div className="w-fit lg:w-full">
-            <ContactButton />
+            <ContactButton propertyId={property.id} />
           </div>
         </div>
       </div>
