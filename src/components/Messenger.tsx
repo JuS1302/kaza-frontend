@@ -153,8 +153,18 @@ export default function Messenger() {
                   aria-label="Votre message"
                   className="flex-1 border border-grey-light rounded-lg px-3 py-2 text-body-md placeholder:text-grey-dark bg-white focus:outline-none focus:border-red-main"
                 />
-                <button type="submit" aria-label="Envoyer" className="shrink-0 cursor-pointer disabled:opacity-40" disabled={!draft.trim()}>
-                  <Icon name="send" size={28} alt="" />
+                <button
+                  type="submit"
+                  aria-label="Envoyer"
+                  disabled={!draft.trim()}
+                  className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-red-main hover:bg-red-dark disabled:bg-grey-light cursor-pointer disabled:cursor-not-allowed transition-colors"
+                >
+                  {/* Flèche dessinée en SVG (vectoriel) plutôt qu'avec l'icône send.png, qui ne fait que
+                      16x16 et devient floue dès qu'on l'agrandit ou qu'on l'affiche sur un écran haute densité */}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <line x1="12" y1="19" x2="12" y2="5" />
+                    <polyline points="5 12 12 5 19 12" />
+                  </svg>
                 </button>
               </form>
             </>
