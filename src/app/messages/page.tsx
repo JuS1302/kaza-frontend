@@ -1,3 +1,15 @@
+import type { Metadata } from 'next'
+import { Suspense } from 'react'
+import Messenger from '@/components/Messenger'
+
+export const metadata: Metadata = {
+  title: 'Messagerie',
+}
+
 export default function MessagesPage() {
-  return <h1>Messagerie</h1>
+  return (
+    <Suspense>
+      <Messenger />
+    </Suspense>
+  )
 }
