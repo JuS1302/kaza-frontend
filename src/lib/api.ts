@@ -54,7 +54,11 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ firstName, lastName, email, password }),
     })
-    if (!res.ok) throw new Error('Impossible de créer le compte')
+    if (!res.ok) {
+      // On remonte le message renvoyé par l'API (ex: "Email déjà utilisé") plutôt qu'un message générique
+      const body = await res.json().catch(() => null)
+      throw new Error(body?.message ?? body?.error ?? `Impossible de créer le compte (erreur ${res.status})`)
+    }
     return res.json()
   }
 

@@ -27,8 +27,9 @@ export default function RegisterForm() {
       localStorage.setItem('kasa_token', token)
       window.dispatchEvent(new Event('kasa-auth-change'))
       router.push(redirect)
-    } catch {
-      setError('Impossible de créer le compte. Vérifiez vos informations.')
+    } catch (err) {
+      // On affiche le message précis renvoyé par l'API (plus utile qu'un message générique pour comprendre le blocage)
+      setError(err instanceof Error ? err.message : 'Impossible de créer le compte.')
     } finally {
       setLoading(false)
     }
