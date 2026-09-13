@@ -43,16 +43,16 @@
   }
 
   // Crée un compte et retourne le token JWT (même format de réponse que /auth/login)
+  // L'API attend un seul champ "name" (pas firstName/lastName séparés)
   export async function register(
-    firstName: string,
-    lastName: string,
+    name: string,
     email: string,
     password: string
   ): Promise<{ token: string }> {
     const res = await fetch(`${AUTH_URL}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName, lastName, email, password }),
+      body: JSON.stringify({ name, email, password }),
     })
     if (!res.ok) {
       // On remonte le message renvoyé par l'API (ex: "Email déjà utilisé") plutôt qu'un message générique

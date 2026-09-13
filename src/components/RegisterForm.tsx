@@ -23,7 +23,7 @@ export default function RegisterForm() {
     setError('')
     setLoading(true)
     try {
-      const { token } = await register(firstName, lastName, email, password)
+      const { token } = await register(`${firstName} ${lastName}`.trim(), email, password)
       localStorage.setItem('kasa_token', token)
       window.dispatchEvent(new Event('kasa-auth-change'))
       router.push(redirect)
